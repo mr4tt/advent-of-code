@@ -1,5 +1,4 @@
 def scratchWinner(file):
-    sum = 0
     cardCount = {}
     cardMatches = {}
     with open(file, "r") as input:
@@ -27,11 +26,9 @@ def scratchWinner(file):
         for i in range(cardCount[key]):
             for j in range(matches):
                 cardCount[key + j + 1] += 1
-
+    
     # count up your cards
-    for count in cardCount.values():
-        sum += count
-    return sum
+    return sum(cardCount.values())
 
 file = "day4_input.txt"
 print("ans: ", scratchWinner(file))

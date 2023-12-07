@@ -1,5 +1,5 @@
 def scratchWinner(file):
-    sum = 0
+    total = 0
 
     with open(file, "r") as input:
         for line in input:
@@ -16,8 +16,8 @@ def scratchWinner(file):
                     points = 1
                 elif num in winNums:
                     points *= 2
-            sum += points
-    return sum
+            total += points
+    return total
 
 file = "day4_input.txt"
 print("ans: ", scratchWinner(file))
