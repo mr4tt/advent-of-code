@@ -13,23 +13,25 @@ def mapTravel(file):
     
     ans = 0
     for row in rows:
-        temp = row
-        pyramid = [row]
-        # while not all zeros
+        temp = row # contains the current pyramid row 
+        pyramid = [row] # contains full pyramid
+        # while temp is not all zeros
         while not all(elem == 0 for elem in temp):
-            num_list = []
-            # loops through each element in a row
+            
+            num_list = [] # current list of differences 
+            # loops through each element in a row and calculate the differences
             for index in range(1, len(temp)):
                 num_list.append(temp[index] - temp[index - 1])
 
             temp = num_list
             pyramid.append(num_list)
 
-        first_ele = 0
+        # once the full pyramid is found, calculate the differences of the last elements to get the sum
+        last_ele = 0
         # start at len -2 to ignore the 0 row
         for n in range(len(pyramid) - 2, -1, -1):
-            first_ele = pyramid[n][0] - first_ele
-        ans += first_ele
+            last_ele = pyramid[n][-1] + last_ele
+        ans += last_ele
 
     return ans
 
