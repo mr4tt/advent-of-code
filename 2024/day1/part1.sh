@@ -16,6 +16,7 @@ while IFS= read -r line || [ -n "$line" ]; do
 
 done < "$input" 
 
+# sort the lists 
 IFS=$'\n' list1=($(sort <<<"${list1[*]}"))
 IFS=$'\n' list2=($(sort <<<"${list2[*]}"))
 unset IFS
@@ -25,8 +26,9 @@ arrLength=${#list1[@]}
 ans=0
 for (( i=0; i<${arrLength}; i++ ));
 do
+	# subtract each value from each other 
 	temp=$((${list1[$i]}-${list2[$i]}))
-
+	# remove the negative sign, if any
 	ans=$(($ans + ${temp#-}))
 done
 
