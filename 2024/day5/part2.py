@@ -1,7 +1,4 @@
 from collections import defaultdict
-import sys
-
-sys.setrecursionlimit(40000)
 
 ans = 0 
 correct = []
@@ -17,12 +14,6 @@ for rule in rules:
 
 def checkList(pageList, ruleMap):
     seen = set()
-
-    # # check if the first number follows the rules  
-    # if pageList[0] in ruleMap.keys():
-    #     for i in range(1, len(pageList)):
-    #         if i in ruleMap[pageList[0]]:
-    #             return False, i
 
     # check if the first number follows the rules  
     if pageList[0] in ruleMap.keys():
@@ -44,9 +35,7 @@ def checkList(pageList, ruleMap):
     return True, 0
 
 def rearrange(pageList, index):
-    # print("pre-rearrange,", pageList)
-    # print(index)    
-
+    # for testing; it'll infinite loop if index is 0
     if index == 0:
         print("ERROR")
         raise SystemExit
@@ -64,10 +53,7 @@ for page in pages:
         while not result:
             arrangement = rearrange(pageList, index)
             result, index = checkList(pageList, ruleMap)
-        # print("arrangement:", arrangement)
         correct.append(arrangement)
-
-print(correct)
 
 for pageList in correct:
     ans += int(pageList[len(pageList) // 2])
