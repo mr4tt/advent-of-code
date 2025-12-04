@@ -1,5 +1,6 @@
 use std::fs;
 use std::collections::HashSet;
+use std::collections::HashMap;
 
 fn main() {
     let codes = parse_file();
@@ -25,6 +26,7 @@ fn parse_file() -> Vec<String> {
 
 fn part_one(codes: Vec<String>) {
     let mut ans = 0;
+
     for code in codes {
         let (start, end) = code.split_once('-').unwrap();
         let start: u64 = start.parse().unwrap();
@@ -51,6 +53,8 @@ fn part_one(codes: Vec<String>) {
 
 fn part_two(codes: Vec<String>) {
     let mut ans = 0;
+    let mut factors_map = HashMap::new();
+
     for code in codes {
         let (start, end) = code.split_once('-').unwrap();
         let start: u64 = start.parse().unwrap();
@@ -61,10 +65,10 @@ fn part_two(codes: Vec<String>) {
             let length = num_str.len();
 
             // find all factors of the length to see how we can evenly divide the number
-            let factors: HashSet<usize> = factors(length);
+            let factors = factors_map.entry(length).or_insert(find_factors(length));
 
-            for factor in factors {
-                let chunks = split_into_chunks(&num_str, factor as usize);
+            for factor in  &mut factors.iter() {
+                let chunks = split_into_chunks(&num_str, *factor);
                 let first_element = &chunks[0];
                 // if all chunks in the number are equal, then it's invalid
                 if chunks.iter().all(|element| element == first_element) {
@@ -76,8 +80,7 @@ fn part_two(codes: Vec<String>) {
     }
     println!("{ans}");
 
-    // find factors 
-    fn factors (number: usize) -> HashSet<usize> {
+    fn find_factors (number: usize) -> HashSet<usize> {
         let mut factors: HashSet<usize> = HashSet::new();
 
         // don't use number + 1 as we don't need the number itself in the list
